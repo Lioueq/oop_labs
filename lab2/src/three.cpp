@@ -46,7 +46,8 @@ Three::Three(Three &&other) noexcept {
 bool Three::isGreaterThan(const Three &other) const {
     if (_size > other._size) {
         return true;
-    } else if (_size < other._size) {
+    } 
+    else if (_size < other._size) {
         return false;
     }
     for (size_t i = _size; i-- > 0;) {
@@ -54,7 +55,8 @@ bool Three::isGreaterThan(const Three &other) const {
         unsigned char b = (i < other._size) ? (other._array[i] - '0') : 0;
         if (a > b) {
             return true;
-        } else if (a < b) {
+        } 
+        else if (a < b) {
             return false;
         }
     }
@@ -89,7 +91,8 @@ Three Three::add(const Three &other) {
         if (sum >= 3) {
             carry = sum / 3;
             result_array[i] = (sum % 3) + '0';
-        } else {
+        } 
+        else {
             carry = 0;
             result_array[i] = sum + '0';
         }
@@ -107,30 +110,29 @@ Three Three::add(const Three &other) {
 }
 
 Three Three::subtract(const Three &other) {
-    if (this->isLessThan(other)) {
-        throw std::invalid_argument("Result is negative. Subtraction not possible.");
-    }
     size_t max_size = std::max(_size, other._size);
     unsigned char *result_array = new unsigned char[max_size];
-    size_t borrow = 0;
+    int borrow = 0;
     for (size_t i = 0; i < max_size; ++i) {
-        unsigned char a = (i < _size) ? _array[i] - '0' : 0;
-        unsigned char b = (i < other._size) ? other._array[i] - '0' : 0;
-        if (a < b + borrow) {
-            a += 3;
+        int a = (i < _size) ? _array[i] - '0' : 0;
+        int b = (i < other._size) ? other._array[i] - '0' : 0;
+        int diff = a - b - borrow;
+        if (diff < 0) {
+            diff += 3;
             borrow = 1;
-        } else {
+        } 
+        else {
             borrow = 0;
         }
-        result_array[i] = (a - b - borrow) + '0';
+        result_array[i] = diff + '0';
     }
-    size_t result_size = max_size;
-    while (result_size > 1 && result_array[result_size - 1] == '0') {
-        --result_size;
+    size_t new_size = max_size;
+    while (new_size > 1 && result_array[new_size - 1] == '0') {
+        --new_size;
     }
-    Three result(result_size, '0');
-    for (size_t j = 0; j < result_size; ++j) {
-        result._array[j] = result_array[j];
+    Three result(new_size, '0');
+    for (size_t i = 0; i < new_size; ++i) {
+        result._array[i] = result_array[i];
     }
     delete[] result_array;
     return result;

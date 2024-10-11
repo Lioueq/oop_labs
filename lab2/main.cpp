@@ -3,10 +3,10 @@
 
 
 int main() {
-    Three arr1{'1', '2', '1'};
+    Three arr1{'0', '2', '1'};
     arr1.print(std::cout) << '\n';
 
-    Three arr2{'1', '2', '2'};
+    Three arr2{'2', '0', '1'};
     arr2.print(std::cout) << '\n';
 
     Three arr3(arr1.add(arr2));

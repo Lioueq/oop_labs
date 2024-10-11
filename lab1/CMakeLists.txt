@@ -4,10 +4,8 @@ project(lab_1)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
 # Добавление опций компиляции
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=maybe-uninitialized")
-
 
 # Установка Google Test
 include(FetchContent)
@@ -22,18 +20,24 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-add_library(${CMAKE_PROJECT_NAME}_lib src/lab1.cpp)
+
+include_directories(${INCLUDE_DIR})
+
+file(GLOB_RECURSE SOURCES LIST_DIRECTORIES false ${SOURCE_DIR}/*.cpp)
+
+add_library(${CMAKE_PROJECT_NAME}_lib ${SOURCES})
 add_executable(${CMAKE_PROJECT_NAME}_exe main.cpp)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}_exe PRIVATE ${CMAKE_PROJECT_NAME}_lib)
 
-
 # Добавление тестов
 enable_testing()
 
-add_executable(lab1_tests test/test.cpp)
-target_link_libraries(lab1_tests ${CMAKE_PROJECT_NAME}_lib gtest_main)
+add_executable(${CMAKE_PROJECT_NAME}_tests tests/tests.cpp)
+target_link_libraries(${CMAKE_PROJECT_NAME}_tests ${CMAKE_PROJECT_NAME}_lib gtest_main)
 
 # Добавление тестов в тестовый набор
-add_test(NAME MyProjectTests COMMAND lab1_tests)
+add_test(NAME ${CMAKE_PROJECT_NAME} COMMAND ${CMAKE_PROJECT_NAME})
