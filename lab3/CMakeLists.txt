@@ -31,3 +31,12 @@ add_library(${CMAKE_PROJECT_NAME}_lib ${SOURCES})
 add_executable(${CMAKE_PROJECT_NAME}_exe main.cpp)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}_exe PRIVATE ${CMAKE_PROJECT_NAME}_lib)
+
+# Добавление тестов
+enable_testing()
+
+add_executable(${CMAKE_PROJECT_NAME}_tests tests/tests.cpp)
+target_link_libraries(${CMAKE_PROJECT_NAME}_tests ${CMAKE_PROJECT_NAME}_lib gtest_main)
+
+# Добавление тестов в тестовый набор
+add_test(NAME ${CMAKE_PROJECT_NAME} COMMAND ${CMAKE_PROJECT_NAME})

@@ -12,9 +12,10 @@ enum class FigureType {
 };
 
 void delete_figure_by_index(std::vector<std::unique_ptr<Figure>>& figures, size_t index) {
+    index--;
     if (index < figures.size()) {
         figures.erase(figures.begin() + index);
-        std::cout << "Figure at index " << index << " deleted.\n";
+        std::cout << "Figure at index " << index + 1 << " deleted.\n";
     } else {
         std::cout << "Invalid index.\n";
     }
@@ -24,7 +25,6 @@ void list_figures(const std::vector<std::unique_ptr<Figure>>& figures) {
     double total_area = 0;
     for (size_t i = 0; i < figures.size(); ++i) {
         std::cout << "Figure " << i + 1 << ":\n";
-        std::cout << figures[i] << '\n';
         figures[i]->print_center();
         double area = static_cast<double>(*figures[i]);
         total_area += area;
