@@ -47,6 +47,34 @@ public:
         head_ = node;
     }
 
+    void pop_back() {
+        if (tail_) {
+            Node<T>* node = tail_;
+            tail_ = tail_->prev;
+            if (tail_) {
+                tail_->next = nullptr;
+            } else {
+                head_ = nullptr;
+            }
+            std::allocator_traits<allocator_type>::destroy(alloc_, node);
+            alloc_.deallocate(node, 1);
+        }
+    }
+
+    void pop_front() {
+        if (head_) {
+            Node<T>* node = head_;
+            head_ = head_->next;
+            if (head_) {
+                head_->prev = nullptr;
+            } else {
+                tail_ = nullptr;
+            }
+            std::allocator_traits<allocator_type>::destroy(alloc_, node);
+            alloc_.deallocate(node, 1);
+        }
+    }
+
     void clear() {
         Node<T>* current = head_;
         while (current) {

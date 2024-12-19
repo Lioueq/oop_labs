@@ -21,6 +21,13 @@ int main() {
         std::cout << it->data << '\n';
     }
 
+    intList.pop_back();
+    intList.pop_front();
+
+    for (auto it = intList.begin(); it != intList.end(); ++it) {
+        std::cout << it->data << '\n';
+    }
+
     FixedBlockMemoryResource complexMemoryResource(sizeof(Node<Mita>), 100);
     std::pmr::polymorphic_allocator<Node<Mita>> complexAlloc(&complexMemoryResource);
 
