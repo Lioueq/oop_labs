@@ -35,6 +35,18 @@ public:
         tail_ = node;
     }
 
+    void push_front(const T& value) {
+        Node<T>* node = alloc_.allocate(1);
+        alloc_.construct(node, Node<T>{value, head_, nullptr});
+        if (head_) {
+            head_->prev = node;
+        } 
+        else {
+            tail_ = node;
+        }
+        head_ = node;
+    }
+
     void clear() {
         Node<T>* current = head_;
         while (current) {

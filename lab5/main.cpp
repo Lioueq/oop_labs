@@ -15,6 +15,7 @@ int main() {
     intList.push_back(1);
     intList.push_back(2);
     intList.push_back(3);
+    intList.push_front(0);
 
     for (auto it = intList.begin(); it != intList.end(); ++it) {
         std::cout << it->data << '\n';

@@ -15,6 +15,8 @@ class NPC : public std::enable_shared_from_this<NPC> {
     std::string name;
     int x{0};
     int y{0};
+    int attack_range = 0;
+    int move_range = 0;
     std::vector<std::shared_ptr<IFightObserver>> observers;
 
     NPC(NpcType t, int _x, int _y, std::string name);
