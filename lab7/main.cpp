@@ -4,6 +4,7 @@
 #include <atomic>
 #include <chrono>
 #include <condition_variable>
+#include <stdlib.h>
 #include <iostream>
 #include <mutex>
 #include <queue>
@@ -15,7 +16,7 @@ struct FightTask {
     std::shared_ptr<NPC> defender;
 };
 
-const int SIZE = 50;
+const int SIZE = 10;
 const int NPC_COUNT = 50;
 const int TIME = 30;
 
@@ -67,18 +68,17 @@ void moveThread(std::set<std::shared_ptr<NPC>>& npcs, Map& map) {
                     break;
                 }
             }
-            if (!dead.contains(npc)) {
-                int move_points_x = rand_num(npc->move_range);
-                int move_points_y = rand_num(npc->move_range);
-                int nx = (npc->x + move_points_x + SIZE) % SIZE;
-                int ny = (npc->y + move_points_y + SIZE) % SIZE;
-                if (nx < 0) nx += SIZE;
-                if (ny < 0) ny += SIZE;
-                map.move(npc, nx, ny);
-                npc->x = nx;
-                npc->y = ny;
-            }
+            int move_points_x = rand_num(npc->move_range);
+            int move_points_y = rand_num(npc->move_range);
+            int nx = (npc->x + move_points_x + SIZE) % SIZE;
+            int ny = (npc->y + move_points_y + SIZE) % SIZE;
+            if (nx < 0) nx += SIZE;
+            if (ny < 0) ny += SIZE;
+            map.move(npc, nx, ny);
+            npc->x = nx;
+            npc->y = ny;
         }
+
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 }
@@ -119,11 +119,12 @@ int main() {
     auto start_time = std::chrono::steady_clock::now();
     while (std::chrono::steady_clock::now() - start_time <
            std::chrono::seconds(TIME)) {
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
         std::lock_guard<std::mutex> lock(coutMtx);
         map.print();
-        std::cout << "----------------------------------------------------------------------------" << '\n';
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        system("cls");
     }
     running = false;
 
