@@ -8,6 +8,5 @@ class Pegasus : public NPC {
     Pegasus(int x, int y, std::string name);
     Pegasus(std::istream &is);
 
-
     bool accept(Visitor &visitor) noexcept override;
 };

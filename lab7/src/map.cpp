@@ -9,6 +9,14 @@ void Map::add_NPC(std::shared_ptr<NPC> npc) {
     map[x][y] = npc;
 }
 
+void Map::move(std::shared_ptr<NPC> npc, int x, int y) {
+    std::swap(map[npc->x][npc->y], map[x][y]);
+}
+
+void Map::remove_NPC(std::shared_ptr<NPC> npc) {
+    map[npc->x][npc->y] = nullptr;
+}
+
 void Map::print() {
     for (auto i : map) {
         for (auto j : i) {

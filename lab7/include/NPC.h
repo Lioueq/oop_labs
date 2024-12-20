@@ -15,8 +15,8 @@ class NPC : public std::enable_shared_from_this<NPC> {
     std::string name;
     int x{0};
     int y{0};
-    int attack_range = 0;
-    int move_range = 0;
+    int attack_range{0};
+    int move_range{0};
     std::vector<std::shared_ptr<IFightObserver>> observers;
 
     NPC(NpcType t, int _x, int _y, std::string name);
@@ -24,6 +24,7 @@ class NPC : public std::enable_shared_from_this<NPC> {
 
     void subscribe(std::shared_ptr<IFightObserver> observer) noexcept;
     void fight_notify(const std::shared_ptr<NPC> defender, bool win) noexcept;
+    static bool enemy(std::shared_ptr<NPC> npc1, std::shared_ptr<NPC> npc2) noexcept;
 
     virtual void save(std::ostream &os) noexcept;
     virtual bool is_close(const std::shared_ptr<NPC> &other,

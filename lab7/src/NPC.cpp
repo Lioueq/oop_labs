@@ -22,6 +22,12 @@ void NPC::save(std::ostream &os) noexcept {
     os << type << ' ' << x << ' ' << y << ' ' << name << '\n';
 }
 
+bool NPC::enemy(std::shared_ptr<NPC> npc1, std::shared_ptr<NPC> npc2) noexcept {
+    if (npc1->type + npc2->type == 3) { return true; }
+    else if (npc1->type + npc2->type == 5) { return true; }
+    return false;
+}
+
 bool NPC::is_close(const std::shared_ptr<NPC> &other,
                    size_t distance) noexcept {
     if (std::pow(x - other->x, 2) + std::pow(y - other->y, 2) <=

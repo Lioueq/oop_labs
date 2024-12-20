@@ -3,9 +3,12 @@
 
 Pegasus::Pegasus(int x, int y, std::string name)
     : NPC(PegasusType, x, y, name) {
-        int move_range = 30;
-        int attack_range = 10;
+        attack_range = 10;
+        move_range = 30;
     }
-Pegasus::Pegasus(std::istream &is) : NPC(PegasusType, is) {}
+Pegasus::Pegasus(std::istream &is) : NPC(PegasusType, is) {
+    attack_range = 10;
+    move_range = 30;
+}
 
 bool Pegasus::accept(Visitor &visitor) noexcept { return visitor.visit(*this); }

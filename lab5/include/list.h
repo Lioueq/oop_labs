@@ -1,35 +1,34 @@
 #pragma once
-#include "memory_resource.h"
-#include "iterator.h"
-#include <memory_resource>
 #include <memory>
+#include <memory_resource>
 
-template<typename T>
+#include "iterator.h"
+#include "memory_resource.h"
+
+template <typename T>
 struct Node {
     T data;
     Node* next;
     Node* prev;
 };
 
-template<typename T>
+template <typename T>
 class List {
-public:
+   public:
     using allocator_type = std::pmr::polymorphic_allocator<Node<T>>;
     using iterator = ListIterator<Node<T>>;
 
-    List(allocator_type alloc = {}) : alloc_(alloc), head_(nullptr), tail_(nullptr) {}
+    List(allocator_type alloc = {})
+        : alloc_(alloc), head_(nullptr), tail_(nullptr) {}
 
-    ~List() {
-        clear();
-    }
+    ~List() { clear(); }
 
     void push_back(const T& value) {
         Node<T>* node = alloc_.allocate(1);
         alloc_.construct(node, Node<T>{value, nullptr, tail_});
         if (tail_) {
             tail_->next = node;
-        } 
-        else {
+        } else {
             head_ = node;
         }
         tail_ = node;
@@ -40,8 +39,7 @@ public:
         alloc_.construct(node, Node<T>{value, head_, nullptr});
         if (head_) {
             head_->prev = node;
-        } 
-        else {
+        } else {
             tail_ = node;
         }
         head_ = node;
@@ -89,7 +87,7 @@ public:
     iterator begin() { return iterator(head_); }
     iterator end() { return iterator(nullptr); }
 
-private:
+   private:
     allocator_type alloc_;
     Node<T>* head_;
     Node<T>* tail_;
