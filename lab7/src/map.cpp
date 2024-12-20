@@ -6,7 +6,9 @@ void Map::add_NPC(std::shared_ptr<NPC> npc) {
     int x, y;
     x = npc->x;
     y = npc->y;
-    map[x][y] = npc;
+    if (!map[x][y]) {
+        map[x][y] = npc;
+    }
 }
 
 void Map::move(std::shared_ptr<NPC> npc, int x, int y) {
@@ -43,4 +45,17 @@ void Map::print() {
         }
         std::cout << '\n';
     }
+}
+
+void Map::npc_list() {
+    int count = 0;
+    for (auto i : map) {
+        for (auto j : i) {
+            if (j) {
+                count++;
+                std::cout << *j << '\n';
+            }
+        }
+    }
+    std::cout << "TOTAL ALIVE: " << count << '\n';
 }

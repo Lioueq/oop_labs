@@ -4,10 +4,14 @@
 class Map {
     public:
         Map(int size);
+
         void add_NPC(std::shared_ptr<NPC> npc);
-        void print();
-        void move(std::shared_ptr<NPC> npc, int x, int y);
         void remove_NPC(std::shared_ptr<NPC> npc);
+        void move(std::shared_ptr<NPC> npc, int x, int y);
+
+        void print();
+        void npc_list();
+
     private:
         std::vector<std::vector<std::shared_ptr<NPC>>> map;
 };

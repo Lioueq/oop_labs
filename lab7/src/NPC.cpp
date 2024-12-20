@@ -23,8 +23,8 @@ void NPC::save(std::ostream &os) noexcept {
 }
 
 bool NPC::enemy(std::shared_ptr<NPC> npc1, std::shared_ptr<NPC> npc2) noexcept {
-    if (npc1->type + npc2->type == 3) { return true; }
-    else if (npc1->type + npc2->type == 5) { return true; }
+    if (npc1->type + npc2->type == 3 && npc2->type == NpcType::KnightErrantType) { return true; }  // рыцарь убивает дракона
+    else if (npc1->type + npc2->type == 5 && npc2->type == NpcType::DragonType) { return true; } // дракон убивает пегаса
     return false;
 }
 

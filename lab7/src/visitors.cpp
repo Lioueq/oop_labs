@@ -27,3 +27,4 @@ bool NPCFighter::visit(Pegasus &element) noexcept {
     element.fight_notify(attacker, false);
     return false;
 }
+
